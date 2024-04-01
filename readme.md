@@ -2,6 +2,7 @@
  ## Technologies used
 - python
 - selenium
+- smtplib
 
 ## Usage
 - Include dotenv
@@ -12,8 +13,7 @@ SMTP_SERVER=smtp.office365.com
 SMTP_PORT=587
 SMTP_USERNAME=your_email@outlook.com
 SMTP_PASSWORD=your_email_password
-```
-   
+``` 
 ## Steps taken for project setup
 - installing selenium 
 ```bash 
