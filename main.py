@@ -19,11 +19,6 @@ WebDriverWait(driver, 5).until(
 EC.presence_of_element_located((By.CLASS_NAME, "accordion-toggle"))
 )
 
-# # selecting the input element of the Google.com
-# input_element = driver.find_element(By.CLASS_NAME, "gLFyf")
-# input_element.clear() # clearing the text field or input field
-# input_element.send_keys("Darshan Gautam" + Keys.ENTER) # entering the element to the input box
-
 # finding the search button
 search_button = driver.find_element(By.CLASS_NAME, "accordion-toggle")
 search_button.click()
@@ -52,6 +47,22 @@ state_dropdown.click() # Click to open the dropdown menu
 state_dropdown.send_keys("Ontario") # Start typing "Ontario"
 
 state_dropdown.send_keys(Keys.ENTER) # Press Enter to select
+
+# Check if the response contains "No jobs found"
+response_element = WebDriverWait(driver, 10).until(
+    EC.visibility_of_element_located((By.XPATH, "//span[@id='j_id0:portId:j_id67:recentJobsOuter']"))
+)
+
+# try catch because some time the XPATH changes
+try:
+    # Check if the response contains "No jobs found"
+    no_jobs_element = response_element.find_element(By.XPATH, ".//span[@id='j_id0:portId:j_id67:j_id80']")
+    if no_jobs_element.text.strip() == "No jobs found":
+        print("No jobs found")
+    else:
+        print("Jobs found")
+except:
+    print("Jobs found")
 
 # to hold the browser for 10 seconds
 time.sleep(10)
