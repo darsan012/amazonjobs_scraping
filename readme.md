@@ -1,11 +1,22 @@
 # Scraping amazon jobs to get notification about the job availability
+## Problem statement:
+    Recently I tried to search jobs on amazon jobs and was unable to find the job at the right time.
+    There is certain time when the jobs are available. There is email and text notification option but both of them are
+    not working properly. So, this app resolves that problem by sending email whenever there is job available.
+
+## Future Enhancement
+    - Create frontend site with the login menu.
+    - Ask the user to input the country and settings.
+    - Ask user to enter their email address
+    - Ask user to input the time interval when they want to refresh the page.
+
  ## Technologies used
 - python
 - selenium
 - smtplib
 
 ## Usage
-- Include dotenv
+- Include .env file
 ```bash
 EMAIL_FROM=your_email@outlook.com
 EMAIL_TO=recipient_email@example.com
