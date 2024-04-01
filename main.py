@@ -1,9 +1,59 @@
+import os
+# For working with the email
+from dotenv import load_dotenv
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+# working with selenium packages
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 # for getting the keys
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+#load .env variables
+load_dotenv()
+
+#Function to send the email
+def send_email(subject, body):
+    # Email credentials and settings
+    email_from = os.getenv("EMAIL_FROM")
+    email_to = os.getenv("EMAIL_TO")
+    smtp_server = os.getenv("SMTP_SERVER")
+    smtp_port = os.getenv("SMTP_PORT")
+    smtp_username = os.getenv("SMTP_USERNAME")
+    smtp_password = os.getenv("SMTP_PASSWORD")
+
+    #creating message container
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = subject
+    msg['From'] = email_from
+    msg['To'] = email_to
+
+    # Create the body of the message (a plain-text and an HTML version).
+    text = body
+    html = body
+
+    # Record the MIME types of both parts - text/plain and text/html.
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
+
+    msg.attach(part1)
+    msg.attach(part2)
+
+    # sending the email via smtp server
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(smtp_username, smtp_password)
+        server.sendmail(email_from, email_to, msg.as_string())
+        server.quit()
+        print("Email sent successfully")
+    except Exception as e:
+        print("Failed to send email:", e)
+
 
 # for clicking the select element
 from selenium.webdriver.support.ui import Select
@@ -33,7 +83,7 @@ EC.visibility_of_element_located(
 driver.execute_script("arguments[0].scrollIntoView();", country_dropdown)
 
 country_dropdown.click() # Click to open the dropdown menu
-country_dropdown.send_keys("Canada") # Start typing "Canada"
+country_dropdown.send_keys("Germany") # Start typing "Canada"
 
 # Wait for the dropdown menu for states to become visible
 state_dropdown = WebDriverWait(driver, 10).until(
@@ -44,7 +94,7 @@ EC.visibility_of_element_located(
 driver.execute_script("arguments[0].scrollIntoView();", state_dropdown)
 
 state_dropdown.click() # Click to open the dropdown menu
-state_dropdown.send_keys("Ontario") # Start typing "Ontario"
+state_dropdown.send_keys("Berlin") # Start typing "Ontario"
 
 state_dropdown.send_keys(Keys.ENTER) # Press Enter to select
 
@@ -61,8 +111,10 @@ try:
         print("No jobs found")
     else:
         print("Jobs found")
+        send_email("New jobs found", "New jobs are available on the website.")
 except:
     print("Jobs found")
+    send_email("New jobs found", "New jobs are available on the website.")
 
 # to hold the browser for 10 seconds
 time.sleep(10)

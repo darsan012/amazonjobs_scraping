@@ -6,11 +6,11 @@
 ## Usage
 - Include dotenv
 ```bash
-EMAIL_FROM=your_email@gmail.com
+EMAIL_FROM=your_email@outlook.com
 EMAIL_TO=recipient_email@example.com
-SMTP_SERVER=smtp.gmail.com
+SMTP_SERVER=smtp.office365.com
 SMTP_PORT=587
-SMTP_USERNAME=your_email@gmail.com
+SMTP_USERNAME=your_email@outlook.com
 SMTP_PASSWORD=your_email_password
 ```
    
